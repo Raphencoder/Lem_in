@@ -6,7 +6,7 @@
 /*   By: rkrief <rkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 18:14:50 by rkrief            #+#    #+#             */
-/*   Updated: 2018/03/01 03:37:40 by Raphael          ###   ########.fr       */
+/*   Updated: 2018/03/01 11:16:15 by Raphael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ void	ft_fill(char **res, char *look, char **stock, int *j)
 	while (i < ft_nbtubes(res))
 	{
 		if (ft_tubestr(res[i], look) && !ft_chck(stock, ft_tubestr(res[i], look)))
-{
+{			
 			stock[*j] = ft_tubestr(res[i], look);
 			*j = *j + 1;
+		
 }
 		i++;
 	}
-
 }
 
 int	ft_verify(char *look, char *end, char **res)
@@ -116,9 +116,12 @@ int	ft_verify(char *look, char *end, char **res)
 	i = 0;
 	stock = (char**)ft_memalloc(sizeof(char*) * (ft_nbtubes(res)));
 	stock[i] = ft_strdup(look);
-	while (stock[j])
+	i++;
+	while (j < ft_nbtubes(res))
 	{
-		ft_fill(res, stock[j], stock, &i);	
+		if (!stock[j])
+			break ;
+		ft_fill(res, stock[j], stock, &i);
 		j++;
 	}
 	return (ft_chck(stock, end));
