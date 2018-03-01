@@ -6,7 +6,7 @@
 /*   By: rkrief <rkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 18:14:50 by rkrief            #+#    #+#             */
-/*   Updated: 2018/03/01 11:16:15 by Raphael          ###   ########.fr       */
+/*   Updated: 2018/03/01 11:31:32 by Raphael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int	ft_verify(char *look, char *end, char **res)
 	char **stock;
 	int i;
 	int j;
+	int so;
 
 	j = 0;
 	i = 0;
@@ -124,5 +125,9 @@ int	ft_verify(char *look, char *end, char **res)
 		ft_fill(res, stock[j], stock, &i);
 		j++;
 	}
-	return (ft_chck(stock, end));
+	so = ft_chck(stock, end);
+	i = 0;
+	while (i < ft_nbtubes(res))
+		ft_strdel(&stock[i++]);
+	return (so);
 }
