@@ -6,13 +6,13 @@
 /*   By: rkrief <rkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 18:14:50 by rkrief            #+#    #+#             */
-/*   Updated: 2018/03/01 11:31:32 by Raphael          ###   ########.fr       */
+/*   Updated: 2018/03/05 17:13:24 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-char		*ft_cut(char *s1)
+static char	*ft_cut(char *s1)
 {
 	int i;
 	char *res;
@@ -20,7 +20,7 @@ char		*ft_cut(char *s1)
 	i = 0;
 	while (s1[i] != '-')
 		i++;
-	res = (char*)ft_memalloc(sizeof(char) * (i));
+	res = (char*)ft_memalloc(sizeof(char) * (i + 2));
 	i = 0;
 	while (s1[i] != '-')
 	{	
@@ -30,7 +30,7 @@ char		*ft_cut(char *s1)
 	return (res);
 }
 
-static void     ft_tubestr2(char *s1, char *s2, int *i, int *j)
+static void	ft_tubret2(char *s1, char *s2, int *i, int *j)
 {
 	*i = 0;
 	*j = 0;
@@ -42,12 +42,12 @@ static void     ft_tubestr2(char *s1, char *s2, int *i, int *j)
 	}
 }
 
-char		*ft_tubestr(char *s1, char *s2)
+static char	*ft_tubret(char *s1, char *s2)
 {
 	int i;
 	int j;
 
-	ft_tubestr2(s1, s2, &i, &j);
+	ft_tubret2(s1, s2, &i, &j);
 	if (s1[i] == '-')
 		return (ft_strdup(s1 + i + 1));
 	while (s1[i] != '-')
@@ -65,22 +65,12 @@ char		*ft_tubestr(char *s1, char *s2)
 	return (NULL);
 }
 
-int	ft_nbtubes(char **res)
-{
-	int i;
-
-	i = 0;
-	while (res[i])
-		i++;
-	return (i);
-}
-
-int	ft_chck(char **stock, char *check)
+static int	ft_chck(char **stock, char *check)
 {
 	int	i;
 
 	i = 0;
-	while(stock[i])
+	while (stock[i])
 	{
 		if (ft_strequ(stock[i], check))
 			return (1);
@@ -89,24 +79,25 @@ int	ft_chck(char **stock, char *check)
 	return (0);
 }
 
-void	ft_fill(char **res, char *look, char **stock, int *j)
+static void	ft_fill(char **res, char *look, char **stock, int *j)
 {
 	int i;
-
+	char *tmp;
 	i = 0;
-	while (i < ft_nbtubes(res))
+	while (i < ft_tablen(res))
 	{
-		if (ft_tubestr(res[i], look) && !ft_chck(stock, ft_tubestr(res[i], look)))
-{			
-			stock[*j] = ft_tubestr(res[i], look);
+		tmp = ft_tubret(res[i], look);
+		if (tmp && !ft_chck(stock, tmp))
+		{
+			stock[*j] = ft_tubret(res[i], look);
 			*j = *j + 1;
-		
-}
+		}
+		ft_strdel(&tmp);
 		i++;
 	}
 }
 
-int	ft_verify(char *look, char *end, char **res)
+int			ft_verify(char *start, char *end, t_ants *info)
 {	
 	char **stock;
 	int i;
@@ -114,20 +105,20 @@ int	ft_verify(char *look, char *end, char **res)
 	int so;
 
 	j = 0;
-	i = 0;
-	stock = (char**)ft_memalloc(sizeof(char*) * (ft_nbtubes(res)));
-	stock[i] = ft_strdup(look);
-	i++;
-	while (j < ft_nbtubes(res))
+	i = 1;
+	stock = (char**)ft_memalloc(sizeof(char*) * (ft_tablen(info->names) + 1));
+	stock[i - 1] = ft_strdup(start);
+	while (j < ft_tablen(info->tubes))
 	{
 		if (!stock[j])
 			break ;
-		ft_fill(res, stock[j], stock, &i);
+		ft_fill(info->tubes, stock[j], stock, &i);
 		j++;
 	}
 	so = ft_chck(stock, end);
 	i = 0;
-	while (i < ft_nbtubes(res))
+	while (i < ft_tablen(info->names))
 		ft_strdel(&stock[i++]);
+	free(stock);
 	return (so);
 }
