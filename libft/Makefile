@@ -6,7 +6,7 @@
 #    By: alecott <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/20 15:48:20 by alecott           #+#    #+#              #
-#    Updated: 2018/02/28 11:12:04 by alecott          ###   ########.fr        #
+#    Updated: 2018/04/20 12:27:43 by rkrief           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SOURCES = ft_atoi.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_memset.c \
 		  ft_lstadd.c ft_lstdelone.c ft_lstiter.c ft_lstmap.c ft_lstnew.c \
 		  ft_count_words.c ft_strrev.c ft_isupper.c ft_itoa.c \
 		  get_next_line.c ft_strsubinv.c ft_tablen.c ft_realloc.c ft_tabjoin.c \
-		  ft_tabchr.c ft_tabstr.c ft_puttab.c ft_tabdup.c
+		  ft_tabchr.c ft_tabstr.c ft_puttab.c ft_tabdup.c ft_strndup.c\
 
 OBJETS = $(SOURCES:.c=.o) 
 

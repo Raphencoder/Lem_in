@@ -6,7 +6,7 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 09:57:46 by alecott           #+#    #+#             */
-/*   Updated: 2018/04/19 19:20:14 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/04/20 12:57:57 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,7 @@ int			main(void)
 		return (0);
 	}
 	ft_print(&info);
+	ft_fill_path(info);
+	while (1);
 	return (0);
 }

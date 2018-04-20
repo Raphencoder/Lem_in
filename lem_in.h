@@ -6,7 +6,7 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 10:13:35 by alecott           #+#    #+#             */
-/*   Updated: 2018/04/19 11:09:17 by alecott          ###   ########.fr       */
+/*   Updated: 2018/04/20 12:19:21 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ int		ft_tubestr(char *s1, char *s2);
 int		ft_verify(char *look, char *end, t_ants *info);
 int		ft_test(char **name, char *tube);
 int		ft_test2(char **tubes, char *room);
+void	ft_fill_path(t_ants info);
 
 #endif
