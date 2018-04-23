@@ -6,7 +6,7 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 10:13:35 by alecott           #+#    #+#             */
-/*   Updated: 2018/04/20 12:19:21 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/04/23 11:17:15 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct	s_ants
 	char	**names;
 	char	*start;
 	char	*end;
+	int		nb_room;
 	int		nb_start;
 	int		nb_end;
 	int		nb_ant;
