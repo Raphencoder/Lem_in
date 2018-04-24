@@ -6,7 +6,7 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/04/25 00:31:19 by Raphael          ###   ########.fr       */
+/*   Updated: 2018/04/25 00:36:49 by Raphael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,31 +244,19 @@ char	**ft_findlink(t_ants info, char **allpath)
 	{
 		while (info.tubes[i])
 		{
-			if (ft_find_room_intube(room, info.tubes[i]))
+			if (ft_find_room_intube(room, info.tubes[i]) && (!ft_check_ifexist(ft_get_room(room, info.tubes[i]), path)) && (!(rmi && ft_find_room_intube(rmi, info.tubes[i]) && ft_find_room_intube(rm, info.tubes[i]))) && (!ft_check_path(ft_get_room(room, info.tubes[i]), tab_rm)))
 			{
-				if (!ft_check_ifexist(ft_get_room(room, info.tubes[i]), path))
-				{
-					if (!(rmi && ft_find_room_intube(rmi, info.tubes[i]) && ft_find_room_intube(rm, info.tubes[i])))
-					{
-						if (!ft_check_path(ft_get_room(room, info.tubes[i]), tab_rm))
-						{
-						path = ft_strjoin(ft_strjoin(path, "-"), ft_get_room(room, info.tubes[i]));
-						room = ft_get_room(room, info.tubes[i]);
-						if (ft_strequ(room, info.end))
-						{
-							if (!ft_check_path(path, allpath))
+							path = ft_strjoin(ft_strjoin(path, "-"), ft_get_room(room, info.tubes[i]));
+							room = ft_get_room(room, info.tubes[i]);
+							if (ft_strequ(room, info.end))
 							{
-							//	k = nb_rooms * 10;
-								allpath[j++] = ft_strdup(path);
-							}
-							rm = ft_rm_last_one(path);
-							room = ft_get_last_inpath(path);
-							rmi = ft_get_last_inpath(path);
-							i = 0;
+								if (!ft_check_path(path, allpath))
+									allpath[j++] = ft_strdup(path);
+								rm = ft_rm_last_one(path);
+								room = ft_get_last_inpath(path);
+								rmi = ft_get_last_inpath(path);
+								i = 0;
 
-						}
-						}
-					}
 				}
 			}
 			i++;
