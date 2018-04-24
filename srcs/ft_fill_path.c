@@ -1,16 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_find_dawe.c                                     :+:      :+:    :+:   */
+/*   ft_fill_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/04/23 16:01:17 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/04/24 11:58:21 by Raphael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
+
+
+char	*ft_rm_last_one(char **path)
+{
+	int i;
+	int j;
+	char *res;
+	
+	i = 0;
+	while (*path[i])
+		i++;
+	j = i;
+	while (*path[i] != '-' || i >= 0)
+		i--;
+	res = (char*)ft_memalloc(sizeof(char) * (j - 1 + 1));
+	j = 0;
+	if (i == 0)
+		return (NULL);
+	while (*path[i])
+	{
+		if (*path[i] != '-')
+			res[j++] = *path[i];	
+		*path[i] = '\0';
+		i++;
+	}
+	return (res);
+}
+
 
 int     ft_check_ifexist(char *room, char *path)
 {
@@ -121,42 +149,52 @@ int		ft_find_nbroom(t_ants *info)
 char	*ft_findlink(t_ants info, char **allpath)
 {
 	int 	nb_rooms;
-	char	**room;
+	char	*room;
 	char	*path;
+	char	*rm;
+	char	**tab_rm;
+	char	*clonepath;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	room[j] = info.start;
+	tab_rm = (char**)ft_mememalloc(sizeof(char*) * (200));
+	clonepath = NULL;
+	allpath = 0;
+	room = info.start;
 	path = info.start;
 	if (!(nb_rooms = ft_find_nbroom(&info)))
 		return (0);
-	while (nb_rooms)
+	while (nb_rooms * 2)
 	{
 		while (info.tubes[i])
 		{
 			if (ft_find_room_intube(room, info.tubes[i]))
 			{
-				if (ft_check_ifexist(ft_get_room(room, info.tubes[i++]), path))
+				if (ft_check_ifexist(ft_get_room(room, info.tubes[i]), path) || ft_check_ifrm(ft_get_room(room, info.tubes[i++]), tab_rm))
 					continue ;
 				i--;	
 				path = ft_strjoin(ft_strjoin(path, "-"), ft_get_room(room, info.tubes[i]));
 				room = ft_get_room(room, info.tubes[i]);
-				ft_putendl(room);
-
-				if (ft_strequ(room, info.end) /*&& !ft_check_ifpath(path, allpath)*/)
+				if (ft_strequ(room, info.end))
 					return (path);
-//				if (room == info.end && ft_check_ifpath(path, allpath))
-//				{
-//						
-//				}
 				break ;
 			}
 			i++;
 		}
 		i = 0;
 		nb_rooms--;
+		if (clonepath == NULL)
+			clonepath = path;
+		else if (ft_strequ(clonepath, path))
+		{
+			rm = ft_rm_last_one(&path);
+			tab_rm[j] = rm;
+			j++;
+		}
+		ft_putendl(path);
+		ft_putendl("hey");
 	}
 	return (path);
 }
@@ -170,13 +208,13 @@ char	*ft_find_path(t_ants info)
 
 	i = 0;
 	allpath = (char**)ft_memalloc(sizeof(char*) * (info.nb_room + 1));
-//	while (1)
-//	{
-		if (!(conexion = ft_findlink(info, allpath)))
-			return(NULL);
-//		allpath[i] = connexion;
-//		i++;
-//	}
+	//	while (1)
+	//	{
+	if (!(conexion = ft_findlink(info, allpath)))
+		return(NULL);
+	//		allpath[i] = connexion;
+	//		i++;
+	//	}
 	return (conexion);	
 }
 
@@ -196,7 +234,7 @@ void	ft_fill_path(t_ants info)
 	//	char	*path;
 
 	i = 0;
-//	allpath=0;
+	//	allpath=0;
 	ant_path = ft_createtab(info.nb_ant);
 	ft_putendl(ft_find_path(info));
 }
