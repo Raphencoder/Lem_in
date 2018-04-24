@@ -6,7 +6,7 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/04/24 18:08:04 by Raphael          ###   ########.fr       */
+/*   Updated: 2018/04/25 00:21:30 by Raphael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ int		ft_find_nbroom(t_ants *info)
 }
 
 
-char	*ft_findlink(t_ants info, char **allpath)
+char	**ft_findlink(t_ants info, char **allpath)
 {
 	int 	nb_rooms;
 	char	*room;
@@ -221,13 +221,14 @@ char	*ft_findlink(t_ants info, char **allpath)
 	int		i;
 	int		k;
 	int		j;
-	int		t;
 	int		l;
 	int		m;
+	int		t;
 	int		clonem;
 
 	i = 0;
 	m = 0;
+	t = 0;
 	j = 0;
 	l = 0;
 	rmi = NULL;
@@ -243,42 +244,46 @@ char	*ft_findlink(t_ants info, char **allpath)
 	{
 		while (info.tubes[i])
 		{
+			printf("i = %d\n", i);
 			if (ft_find_room_intube(room, info.tubes[i]))
 			{
-				printf("i = %d\n", i);
-				t = ft_check_ifexist(ft_get_room(room, info.tubes[i]), path);
-				if (t)
-					i++;
-				else if (rmi && ft_find_room_intube(rmi, info.tubes[i]) && ft_find_room_intube(rm, info.tubes[i]))
-					i++;
-				else {
-					path = ft_strjoin(ft_strjoin(path, "-"), ft_get_room(room, info.tubes[i]));
-					printf("newpath = %s\n", path);
-					room = ft_get_room(room, info.tubes[i]);
-					if (ft_strequ(room, info.end))
+				printf("path = %s\n", path);
+				if (!ft_check_ifexist(ft_get_room(room, info.tubes[i]), path))
+				{
+					if (!(rmi && ft_find_room_intube(rmi, info.tubes[i]) && ft_find_room_intube(rm, info.tubes[i])))
 					{
-						if (ft_check_path(path, allpath))
+						printf("room = %s\n", room);
+						if (!ft_check_path(ft_get_room(room, info.tubes[i]), tab_rm))
 						{
-							rm = ft_rm_last_one(path);
-							room = ft_get_last_inpath(path);
-							rmi = ft_get_last_inpath(path);
-							i = 0;
+						path = ft_strjoin(ft_strjoin(path, "-"), ft_get_room(room, info.tubes[i]));
+						printf("newpath = %s\n", path);
+						room = ft_get_room(room, info.tubes[i]);
+						if (ft_strequ(room, info.end))
+						{
+							if (ft_check_path(path, allpath))
+							{
+								rm = ft_rm_last_one(path);
+								room = ft_get_last_inpath(path);
+								rmi = ft_get_last_inpath(path);
+								i = 0;
+							}
+							else
+							{
+								k = nb_rooms * 10;
+								allpath[j] = ft_strdup(path);
+								printf("AJOUT AU TABLEAU\n %s\nAJOUT AU TABLEAU\n", allpath[j]);
+								rm = ft_rm_last_one(path);
+								room = ft_get_last_inpath(path);
+								rmi = ft_get_last_inpath(path);
+								i = 0;
+								j++;
+							}
 						}
-						else
-						{
-							k = nb_rooms * 10;
-							allpath[j] = ft_strdup(path);
-							printf("AJOUT AU TABLEAU\n %s\nAJOUT AU TABLEAU\n", allpath[j]);
-							rm = ft_rm_last_one(path);
-							room = ft_get_last_inpath(path);
-							rmi = ft_get_last_inpath(path);
-							i = 0;
-							j++;
 						}
 					}
 				}
 			}
-		i++;
+			i++;
 		}
 		i = 0;
 		k--;
@@ -286,11 +291,23 @@ char	*ft_findlink(t_ants info, char **allpath)
 		{
 			m++;
 			clonem = m;
+			if (ft_strlen(path) == 3)
+				m = 1;
+			if (ft_strlen(path) == 1)
+				m = 0;
 			while (m)
 			{
 				rm = ft_rm_last_one(path);
+				ft_putendl("rm");
 				m--;
 			}
+			if (!ft_strequ(rm, info.end) && !ft_check_path(rm, tab_rm)){
+				tab_rm[t++] = rm;
+			int y;
+			y = 0;
+			while (tab_rm[y])
+			printf("tab_rm[l] %s\n", tab_rm[y++]);}
+			ft_putendl("end rm");
 			m = clonem;
 			room = ft_get_last_inpath(path);
 			rmi = ft_get_last_inpath(path);
@@ -298,15 +315,16 @@ char	*ft_findlink(t_ants info, char **allpath)
 		else  
 		{
 			clonepath[l++] = ft_strdup(path);
+			m = 0;
 		}
 	}
-	return (path);
+	return (allpath);
 }
 
 
-char	*ft_find_path(t_ants info)
+char	**ft_find_path(t_ants info)
 {
-	char	*conexion;
+	char	**conexion;
 	char	**allpath;
 	int		i;
 
@@ -335,10 +353,12 @@ void	ft_fill_path(t_ants info)
 {
 	int 	i;
 	char	**ant_path;
-	//	char	*path;
+	char	**path;
 
 	i = 0;
 	//	allpath=0;
 	ant_path = ft_createtab(info.nb_ant);
-	ft_find_path(info);
+	path = ft_find_path(info);
+	while (path[i])
+		printf("allpath[i] = %s\n", path[i++]);
 }
