@@ -6,11 +6,64 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/04/25 00:48:19 by Raphael          ###   ########.fr       */
+/*   Updated: 2018/04/25 12:36:54 by Raphael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
+
+void    ft_move_two(char **tubes)
+{
+        int i;
+        char *clone;
+
+        i = 0;
+        while (tubes[i] && tubes[i + 1])
+        {
+                clone = tubes[i + 1];
+                tubes[i + 1] = tubes[i];
+                tubes[i++] = clone;
+        }
+
+}
+
+void    ft_move_back(char **tubes)
+{
+        int i;
+        int j;
+        char *clone;
+
+        i = 0;
+        j = 0;
+        while (tubes[i])
+                i++;
+        i--;
+        while (j < i)
+        {
+                clone = tubes[j];
+                tubes[j++] = tubes[i];
+                tubes[i--] = clone;
+        }
+
+}
+
+void    ft_move_tubes(char **tubes)
+{
+        static int l;
+
+        if (l % 2)
+        {
+                ft_move_two(tubes);
+                ft_move_back(tubes);
+        }
+        else
+        {
+                ft_move_back(tubes);
+                ft_move_two(tubes);
+                ft_move_back(tubes);
+        }
+        l++;
+}
 
 
 int     ft_check_path(char *path, char **allpath)
@@ -217,44 +270,56 @@ char	**ft_findlink(t_ants info, char **allpath)
 	char	*rm;
 	char	*rmi;
 	char	**tab_rm;
+	char	**keep_room;
 	char	**clonepath;
+	int		clonem;
 	int		i;
 	int		k;
 	int		j;
 	int		l;
 	int		m;
 	int		t;
-	int		clonem;
+	int		o;
+	int		z;
 
 	i = 0;
+	z = 0;
 	m = 0;
+	o = 0;
 	t = 0;
+	clonem = 0;
 	j = 0;
 	l = 0;
 	rmi = NULL;
 	tab_rm = (char**)ft_memalloc(sizeof(char*) * (200));
+	keep_room = (char**)ft_memalloc(sizeof(char*) * (200));
 	clonepath = (char**)ft_memalloc(sizeof(char*) * (200));
 	rm = NULL;
+	while (info.tubes[z])
+		z++;
 	room = info.start;
 	path = info.start;
 	if (!(nb_rooms = ft_find_nbroom(&info)))
 		return (0);
-	k = nb_rooms * 5;
+	k = z * 70;
 	while (k)
 	{
 		while (info.tubes[i])
 		{
-			if (ft_find_room_intube(room, info.tubes[i]) && (!ft_check_ifexist(ft_get_room(room, info.tubes[i]), path)) && (!(rmi && ft_find_room_intube(rmi, info.tubes[i]) && ft_find_room_intube(rm, info.tubes[i]))) && (!ft_check_path(ft_get_room(room, info.tubes[i]), tab_rm)))
+			if (ft_find_room_intube(room, info.tubes[i]) && (!ft_check_ifexist(ft_get_room(room, info.tubes[i]), path)) && (!ft_find_room_intube(rm, info.tubes[i])))
 			{
 				path = ft_strjoin(ft_strjoin(path, "-"), ft_get_room(room, info.tubes[i]));
 				room = ft_get_room(room, info.tubes[i]);
 				if (ft_strequ(room, info.end))
 				{
 					if (!ft_check_path(path, allpath))
+					{
 						allpath[j++] = ft_strdup(path);
+						k = z * 3;
+					}
 					rm = ft_rm_last_one(path);
 					room = ft_get_last_inpath(path);
-					rmi = ft_get_last_inpath(path);
+					rm = ft_get_last_inpath(path);
 					i = 0;
 
 				}
@@ -267,26 +332,31 @@ char	**ft_findlink(t_ants info, char **allpath)
 		{
 			m++;
 			clonem = m;
-			if (ft_strlen(path) == 3)
-				m = 1;
-			if (ft_strlen(path) == 1)
-				m = 0;
-			while (m)
-			{
-				rm = ft_rm_last_one(path);
+			while ((size_t)m > (ft_strlen(path) / 2))
 				m--;
-			}
-			if (!ft_strequ(rm, info.end) && !ft_check_path(rm, tab_rm))
-				tab_rm[t++] = rm;
+			while(m){
+				rm = ft_rm_last_one(path);
+				m--;}
 				m = clonem;
 				room = ft_get_last_inpath(path);
-				rmi = ft_get_last_inpath(path);
 		}
 		else  
-		{
-			clonepath[l++] = ft_strdup(path);
-			m = 0;
+		{	
+			o++;
+			if (o > z / 2)
+			{
+				clonepath[l++] = ft_strdup(path);
+				m = 0;
+				o = 0;
+			}
 		}
+		if (k == 1)
+		{
+			ft_move_tubes(info.tubes);
+			k = z * 70;
+			z--;
+		}
+
 	}
 	return (allpath);
 }
