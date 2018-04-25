@@ -6,7 +6,7 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/04/25 12:36:54 by Raphael          ###   ########.fr       */
+/*   Updated: 2018/04/25 15:58:07 by Raphael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,55 +14,55 @@
 
 void    ft_move_two(char **tubes)
 {
-        int i;
-        char *clone;
+	int i;
+	char *clone;
 
-        i = 0;
-        while (tubes[i] && tubes[i + 1])
-        {
-                clone = tubes[i + 1];
-                tubes[i + 1] = tubes[i];
-                tubes[i++] = clone;
-        }
+	i = 0;
+	while (tubes[i] && tubes[i + 1])
+	{
+		clone = tubes[i + 1];
+		tubes[i + 1] = tubes[i];
+		tubes[i++] = clone;
+	}
 
 }
 
 void    ft_move_back(char **tubes)
 {
-        int i;
-        int j;
-        char *clone;
+	int i;
+	int j;
+	char *clone;
 
-        i = 0;
-        j = 0;
-        while (tubes[i])
-                i++;
-        i--;
-        while (j < i)
-        {
-                clone = tubes[j];
-                tubes[j++] = tubes[i];
-                tubes[i--] = clone;
-        }
+	i = 0;
+	j = 0;
+	while (tubes[i])
+		i++;
+	i--;
+	while (j < i)
+	{
+		clone = tubes[j];
+		tubes[j++] = tubes[i];
+		tubes[i--] = clone;
+	}
 
 }
 
 void    ft_move_tubes(char **tubes)
 {
-        static int l;
-
-        if (l % 2)
-        {
-                ft_move_two(tubes);
-                ft_move_back(tubes);
-        }
-        else
-        {
-                ft_move_back(tubes);
-                ft_move_two(tubes);
-                ft_move_back(tubes);
-        }
-        l++;
+	static int l;
+	
+	if (l % 2)
+	{
+		ft_move_two(tubes);
+		ft_move_back(tubes);
+	}
+	else
+	{
+		ft_move_back(tubes);
+		ft_move_two(tubes);
+		ft_move_back(tubes);
+	}
+	l++;
 }
 
 
@@ -261,6 +261,40 @@ int		ft_find_nbroom(t_ants *info)
 	return (nb_rooms);
 }
 
+char	*ft_remove_ifrepeat(char *rm, int *m,  char *path, char *room)
+{
+	int clonem;
+
+	*m = *m + 1;
+	clonem = *m;
+	while ((size_t)*m > (ft_strlen(path) / 2))
+		*m = *m - 1;
+	while(*m)
+	{
+		rm = ft_rm_last_one(path);
+		*m = *m - 1;
+	}
+	*m = clonem;
+	room = ft_get_last_inpath(path);
+	return (room);
+}
+
+
+char 	*ft_complete_path(char *path, char *room, int i, t_ants info)
+{
+	char *tmp;
+	char *tmpp;
+	
+	tmpp = ft_get_room(room, info.tubes[i]);
+	tmp = path;
+	path = (ft_strjoin(tmp, "-"));
+	tmp = path;
+	path = ft_strjoin(tmp, tmpp);
+	ft_strdel(&tmp);
+	ft_strdel(&tmpp);
+	return (path);
+}	
+
 
 char	**ft_findlink(t_ants info, char **allpath)
 {
@@ -268,9 +302,7 @@ char	**ft_findlink(t_ants info, char **allpath)
 	char	*room;
 	char	*path;
 	char	*rm;
-	char	*rmi;
-	char	**tab_rm;
-	char	**keep_room;
+	char	*tmp;
 	char	**clonepath;
 	int		clonem;
 	int		i;
@@ -290,9 +322,6 @@ char	**ft_findlink(t_ants info, char **allpath)
 	clonem = 0;
 	j = 0;
 	l = 0;
-	rmi = NULL;
-	tab_rm = (char**)ft_memalloc(sizeof(char*) * (200));
-	keep_room = (char**)ft_memalloc(sizeof(char*) * (200));
 	clonepath = (char**)ft_memalloc(sizeof(char*) * (200));
 	rm = NULL;
 	while (info.tubes[z])
@@ -301,45 +330,54 @@ char	**ft_findlink(t_ants info, char **allpath)
 	path = info.start;
 	if (!(nb_rooms = ft_find_nbroom(&info)))
 		return (0);
-	k = z * 70;
+	k = z * 10;
 	while (k)
 	{
 		while (info.tubes[i])
 		{
-			if (ft_find_room_intube(room, info.tubes[i]) && (!ft_check_ifexist(ft_get_room(room, info.tubes[i]), path)) && (!ft_find_room_intube(rm, info.tubes[i])))
+			if (ft_find_room_intube(room, info.tubes[i]) && (!ft_check_ifexist(tmp = ft_get_room(room, info.tubes[i]), path)) && (!ft_find_room_intube(rm, info.tubes[i])))
 			{
-				path = ft_strjoin(ft_strjoin(path, "-"), ft_get_room(room, info.tubes[i]));
-				room = ft_get_room(room, info.tubes[i]);
+				path = ft_complete_path(path, room, i, info);
+				ft_strdel(&room);
+				room = ft_strdup(tmp);
+				ft_strdel(&tmp);
 				if (ft_strequ(room, info.end))
 				{
 					if (!ft_check_path(path, allpath))
-					{
 						allpath[j++] = ft_strdup(path);
-						k = z * 3;
-					}
+					if (rm)
+						ft_strdel(&rm);
 					rm = ft_rm_last_one(path);
+					ft_strdel(&rm);
+					ft_strdel(&room);
 					room = ft_get_last_inpath(path);
 					rm = ft_get_last_inpath(path);
 					i = 0;
-
 				}
+				
 			}
+		//	else
+		//		ft_strdel(&tmp);
 			i++;
 		}
 		i = 0;
 		k--;
 		if (ft_check_path(path, clonepath))
-		{
-			m++;
-			clonem = m;
-			while ((size_t)m > (ft_strlen(path) / 2))
-				m--;
-			while(m){
-				rm = ft_rm_last_one(path);
-				m--;}
-				m = clonem;
-				room = ft_get_last_inpath(path);
-		}
+{
+	m = m + 1;
+        clonem = m;
+        while ((size_t)m > (ft_strlen(path) / 2))
+                m = m - 1;
+        while(m)
+        {
+		if (rm)
+			ft_strdel(&rm);
+                rm = ft_rm_last_one(path);
+                m = m -1;
+        }
+        m = clonem;
+        room = ft_get_last_inpath(path);
+}
 		else  
 		{	
 			o++;
@@ -353,7 +391,7 @@ char	**ft_findlink(t_ants info, char **allpath)
 		if (k == 1)
 		{
 			ft_move_tubes(info.tubes);
-			k = z * 70;
+			k = z * 10;
 			z--;
 		}
 
