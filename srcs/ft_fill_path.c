@@ -6,7 +6,7 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/04/25 16:51:39 by Raphael          ###   ########.fr       */
+/*   Updated: 2018/04/25 18:31:52 by Raphael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,26 @@ void    ft_move_two(char **tubes)
 	}
 
 }
+
+
+void	ft_move_triple(char **tubes)
+{
+	int i;
+	int j;
+	char *clone;
+
+	i = 0;
+	j = 0;
+	
+	while (tubes[i] && tubes[i + 2])
+	{
+		clone = tubes[i];
+		tubes[i] = tubes[i + 2];
+		tubes[i + 2] = clone;
+		i++;	
+	}	
+}
+
 
 void    ft_move_back(char **tubes)
 {
@@ -50,18 +70,15 @@ void    ft_move_back(char **tubes)
 void    ft_move_tubes(char **tubes)
 {
 	static int l;
-	
-	if (l % 2)
-	{
-		ft_move_two(tubes);
+
+	if (l == 0)
 		ft_move_back(tubes);
-	}
+	if (!(l % 5))
+		ft_move_back(tubes);	
+	else if (l % 2)
+		ft_move_triple(tubes);
 	else
-	{
-		ft_move_back(tubes);
 		ft_move_two(tubes);
-		ft_move_back(tubes);
-	}
 	l++;
 }
 
@@ -283,7 +300,7 @@ char 	*ft_complete_path(char *path, char *room, int i, t_ants info)
 {
 	char *tmp;
 	char *tmpp;
-	
+
 	tmpp = ft_get_room(room, info.tubes[i]);
 	tmp = path;
 	path = (ft_strjoin(tmp, "-"));
@@ -339,9 +356,9 @@ char	**ft_findlink(t_ants info, char **allpath)
 			if (ft_find_room_intube(room, info.tubes[i]) && (!ft_check_ifexist(tmp, path)) && (!ft_find_room_intube(rm, info.tubes[i])))
 			{
 				path = ft_complete_path(path, room, i, info);
-			//	ft_strdel(&room);
+				if (room)
+					ft_strdel(&room);
 				room = tmp;
-			//	ft_strdel(&tmp);
 				if (ft_strequ(room, info.end))
 				{
 					if (!ft_check_path(path, allpath))
@@ -355,7 +372,7 @@ char	**ft_findlink(t_ants info, char **allpath)
 					rm = ft_get_last_inpath(path);
 					i = 0;
 				}
-				
+
 			}
 			else
 				ft_strdel(&tmp);
@@ -364,21 +381,22 @@ char	**ft_findlink(t_ants info, char **allpath)
 		i = 0;
 		k--;
 		if (ft_check_path(path, clonepath))
-{
-	m = m + 1;
-        clonem = m;
-        while ((size_t)m > (ft_strlen(path) / 2))
-                m = m - 1;
-        while(m)
-        {
-		if (rm)
-			ft_strdel(&rm);
-                rm = ft_rm_last_one(path);
-                m = m -1;
-        }
-        m = clonem;
-        room = ft_get_last_inpath(path);
-}
+		{
+			m = m + 1;
+			clonem = m;
+			while ((size_t)m > (ft_strlen(path) / 2))
+				m = m - 1;
+			while(m)
+			{
+				if (rm)
+					ft_strdel(&rm);
+				rm = ft_rm_last_one(path);
+				m = m -1;
+			}
+			m = clonem;
+			ft_strdel(&room);
+			room = ft_get_last_inpath(path);
+		}
 		else  
 		{	
 			o++;
@@ -390,17 +408,26 @@ char	**ft_findlink(t_ants info, char **allpath)
 			}
 		}
 		if (k == 1)
-		{
+		{	
 			ft_move_tubes(info.tubes);
 			k = z * 10;
 			z--;
+			ft_strdel(&rm);
+			ft_strdel(&room);
+			room = ft_strdup(info.start);
+			m = 0;
+			i = 0;
 		}
 
 	}
+	ft_strdel(&room);
+	ft_strdel(&rm);
+	ft_strdel(&path);
 	l = 0;
 	while (clonepath[l])
 		ft_strdel(&(clonepath[l++]));
 	ft_memdel((void**)clonepath);
+	free(clonepath);
 	return (allpath);
 }
 
