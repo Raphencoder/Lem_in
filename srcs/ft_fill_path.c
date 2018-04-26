@@ -12,79 +12,6 @@
 
 #include "../lem_in.h"
 
-void    ft_move_two(char **tubes)
-{
-	int i;
-	char *clone;
-
-	i = 0;
-	while (tubes[i] && tubes[i + 1])
-	{
-		clone = tubes[i + 1];
-		tubes[i + 1] = tubes[i];
-		tubes[i++] = clone;
-	}
-
-}
-
-
-void	ft_move_triple(char **tubes)
-{
-	int i;
-	int j;
-	char *clone;
-
-	i = 0;
-	j = 0;
-
-	while (tubes[i] && tubes[i + 2])
-	{
-		clone = tubes[i];
-		tubes[i] = tubes[i + 2];
-		tubes[i + 2] = clone;
-		i++;	
-	}	
-}
-
-
-void    ft_move_back(char **tubes)
-{
-	int i;
-	int j;
-	char *clone;
-
-	i = 0;
-	j = 0;
-	while (tubes[i])
-		i++;
-	i--;
-	while (j < i)
-	{
-		clone = tubes[j];
-		tubes[j++] = tubes[i];
-		tubes[i--] = clone;
-	}
-
-}
-
-void    ft_move_tubes(char **tubes)
-{
-	static int l;
-
-	if (l == 0)
-		ft_move_back(tubes);
-	if (!(l % 5))
-		ft_move_back(tubes);	
-	else if (l % 2)
-	{
-		ft_move_two(tubes);	
-		ft_move_triple(tubes);
-	}
-	else
-		ft_move_two(tubes);
-	l++;
-}
-
 
 int     ft_check_path(char *path, char **allpath)
 {
@@ -322,7 +249,7 @@ void	ft_find_nb_tubes(t_ants *info)
 void	ft_add_and_delete(t_ants *info, char **allpath)
 {
 	if (!ft_check_path(info->path, allpath))
-	{		
+	{
 		allpath[info->j] = ft_strdup(info->path);
 		info->j++;
 	}
@@ -420,9 +347,9 @@ void	ft_into_the_while(char *tmp, int *i, char **allpath, t_ants *info)
 		{
 			ft_add_and_delete(info, allpath);
 			*i = -1;
-		}		
+		}
 	}
-	else	
+	else
 		ft_strdel(&tmp);
 	*i = *i + 1;
 }
@@ -445,7 +372,7 @@ char	**ft_findlink(t_ants *info, char **allpath)
 		info->k--;
 		if (ft_check_path(info->path, clonepath))
 			ft_choose_nbofrm(&clonem, info);
-		else  
+		else
 			ft_save_path_ifrepeat(info, clonepath);
 		if (info->k == 1)
 			ft_sort_tubes_and_repeat(info, &i);
@@ -465,7 +392,7 @@ char	**ft_find_path(t_ants *info)
 	ft_find_nb_tubes(info);
 	ft_find_nbroom(info);
 	allpath = ft_findlink(info, allpath);
-	return (allpath);	
+	return (allpath);
 }
 
 

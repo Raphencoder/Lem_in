@@ -18,13 +18,13 @@ LIB = $(addprefix $(LIB_PATH), $(LIB_NAME))
 
 NAME = lem-in
 
-CFLAGS = -Wall -Werror -Wextra -g 
+CFLAGS = -Wall -Werror -Wextra -g
 
 INC = lem_in.h
 
 SRCS_PATH = ./srcs/
 
-ALL_SRCS = main.c ft_norm.c ft_stock.c ft_names.c ft_error.c ft_verify.c ft_tubestr.c ft_room_number.c ft_check_ant.c ft_fill_path.c\
+ALL_SRCS = main.c ft_norm.c ft_stock.c ft_names.c ft_error.c ft_verify.c ft_tubestr.c ft_room_number.c ft_check_ant.c ft_fill_path.c ft_move_tubes.c\
 
 SRCS = $(addprefix $(SRCS_PATH), $(ALL_SRCS))
 

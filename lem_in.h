@@ -62,5 +62,6 @@ int		ft_verify(char *look, char *end, t_ants *info);
 int		ft_test(char **name, char *tube);
 int		ft_test2(char **tubes, char *room);
 void	ft_fill_path(t_ants *info);
+void  ft_move_tubes(char **tubes);
 
 #endif
