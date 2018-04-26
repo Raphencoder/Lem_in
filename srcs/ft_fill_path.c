@@ -12,99 +12,6 @@
 
 #include "../lem_in.h"
 
-int     ft_check_path(char *path, char **allpath)
-{
-	int i;
-
-	i = 0;
-	if (allpath == NULL)
-		return (0);
-	while (allpath[i])
-	{
-		if (ft_strequ(path, allpath[i]))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void		ft_find_nbroom(t_ants *info)
-{
-	int	nb_rooms;
-
-	nb_rooms = 0;
-	while (info->names[nb_rooms])
-		nb_rooms++;
-	nb_rooms--;
-	if (nb_rooms < 0)
-		return ;
-	info->nb_room = nb_rooms;
-}
-
-char	*ft_remove_ifrepeat(char *rm, int *m,  char *path, char *room)
-{
-	int clonem;
-
-	*m = *m + 1;
-	clonem = *m;
-	while ((size_t)*m > (ft_strlen(path) / 2))
-		*m = *m - 1;
-	while(*m)
-	{
-		rm = ft_rm_last_one(path);
-		*m = *m - 1;
-	}
-	*m = clonem;
-	room = ft_get_last_inpath(path);
-	return (room);
-}
-
-void	ft_find_nb_tubes(t_ants *info)
-{
-	int	i;
-
-	i = 0;
-	while (info->tubes[i])
-		i++;
-	i--;
-	info->nb_tubes = i;
-}
-
-void	ft_add_and_delete(t_ants *info, char **allpath)
-{
-	if (!ft_check_path(info->path, allpath))
-	{
-		allpath[info->j] = ft_strdup(info->path);
-		info->j++;
-	}
-	if (info->rm)
-		ft_strdel(&info->rm);
-	info->rm = ft_rm_last_one(info->path);
-	ft_strdel(&info->rm);
-	ft_strdel(&info->room);
-	info->room = ft_get_last_inpath(info->path);
-	info->rm = ft_get_last_inpath(info->path);
-}
-
-void	ft_choose_nbofrm(int *clonem, t_ants *info)
-{
-	info->m++;
-	*clonem = info->m;
-	while ((size_t)info->m > (ft_strlen(info->path) / 2))
-		info->m--;
-	while(info->m)
-	{
-		if (info->rm)
-			ft_strdel(&info->rm);
-		info->rm = ft_rm_last_one(info->path);
-		info->m--;
-	}
-	info->m = *clonem;
-	ft_strdel(&info->room);
-	info->room = ft_get_last_inpath(info->path);
-
-}
-
 void	ft_save_path_ifrepeat(t_ants *info, char **clonepath)
 {
 	info->nb_repeat++;
@@ -179,32 +86,26 @@ char	**ft_findlink(t_ants *info, char **allpath)
 	return (allpath);
 }
 
-
-char	**ft_find_path(t_ants *info)
+void	ft_fill_path(t_ants *info)
 {
+	int 	i;
+	char	**path;
 	char	**allpath;
-	int		i;
 
 	i = 0;
 	allpath = (char**)ft_memalloc(sizeof(char*) * (500 + 1));
 	ft_find_nb_tubes(info);
 	ft_find_nbroom(info);
-	allpath = ft_findlink(info, allpath);
-	return (allpath);
-}
-
-
-void	ft_fill_path(t_ants *info)
-{
-	int 	i;
-	char	**path;
-
-	i = 0;
-	path = ft_find_path(info);
+	path = ft_findlink(info, allpath);
 	while (path[i])
 		printf("allpath[i] = %s\n", path[i++]);
 	i = 0;
 	while(path[i])
 		ft_strdel(&path[i++]);
 	ft_memdel((void**)path);
+	i = 0;
+	while(allpath[i])
+		ft_strdel(&allpath[i++]);
+	ft_memdel((void**)allpath);
+
 }

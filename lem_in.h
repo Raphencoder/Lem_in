@@ -71,6 +71,11 @@ int		ft_find_room_intube(char *room, char *link);
 char	*ft_get_last_inpath(char *path);
 char	*ft_complete_path(char *path, char *room, int i, t_ants info);
 int   ft_check_ifexist(char *room, char *path);
-
+void	ft_add_and_delete(t_ants *info, char **allpath);
+int		ft_check_path(char *path, char **allpath);
+void	ft_find_nbroom(t_ants *info);
+char	*ft_remove_ifrepeat(char *rm, int *m,  char *path, char *room);
+void	ft_choose_nbofrm(int *clonem, t_ants *info);
+void	ft_find_nb_tubes(t_ants *info);
 
 #endif
