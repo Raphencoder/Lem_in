@@ -63,5 +63,14 @@ int		ft_test(char **name, char *tube);
 int		ft_test2(char **tubes, char *room);
 void	ft_fill_path(t_ants *info);
 void  ft_move_tubes(char **tubes);
+void	ft_feel_free(t_ants *info, char **clonepath);
+char	*ft_rm_last_one(char *path);
+void	ft_sort_tubes_and_repeat(t_ants *info, int *i);
+char	*ft_get_room(char *room, char *link);
+int		ft_find_room_intube(char *room, char *link);
+char	*ft_get_last_inpath(char *path);
+char	*ft_complete_path(char *path, char *room, int i, t_ants info);
+int   ft_check_ifexist(char *room, char *path);
+
 
 #endif

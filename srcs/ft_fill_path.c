@@ -12,7 +12,6 @@
 
 #include "../lem_in.h"
 
-
 int     ft_check_path(char *path, char **allpath)
 {
 	int i;
@@ -28,164 +27,6 @@ int     ft_check_path(char *path, char **allpath)
 	}
 	return (0);
 }
-
-char    *ft_get_last_inpath(char *path)
-{
-	int     i;
-	int     k;
-	int     j;
-	char    *res;
-
-	i = 0;
-	k = 0;
-	if (path == NULL)
-		return (NULL);
-	while (path[i])
-		i++;
-	j = i;
-	while (path[i] != '-' && i > 0)
-		i--;
-	if (i == 0)
-	{
-		res = ft_strdup(path);
-		return (res);
-	}
-	res = (char*)ft_memalloc(sizeof(char) * (j - i));
-	i++;
-	while (path[i])
-		res[k++] = path[i++];
-	return (res);
-}
-
-void	ft_modify(char *path, int k)
-{
-	char	*tmp;
-	int	i;
-
-	i = 0;
-	tmp = ft_strdup(path);
-	ft_strclr(path);
-	while (i < k)
-	{
-		path[i] = tmp[i];
-		i++;
-	}
-	ft_strdel(&tmp);
-}
-
-char    *ft_rm_last_one(char *path)
-{
-	int i;
-	int j;
-	int k;
-	char *res;
-
-	i = 0;
-	while (path[i])
-		i++;
-	i--;
-	k = i;
-	while (path[i] != '-' && i >= 0)
-		i--;
-	res = (char*)ft_memalloc(sizeof(char) * (k - i + 1));
-	k = i;
-	j = 0;
-	if (i == 0)
-		return (NULL);
-	while (path[i])
-	{
-		if (path[i++] != '-')
-			res[j++] = path[i - 1];
-	}
-	ft_modify(path, k);
-	return (res);
-}
-
-int     ft_check_ifexist(char *room, char *path)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (path[i])
-	{
-		if (room[j] == path[i])
-		{
-			while (path[i] != '-' && room[j] && room[j] == path[i])
-			{
-				j++;
-				i++;
-			}
-			if (!room[j] && (path[i] == '-' || !path[i]))
-				return (1);
-		}
-		j = 0;
-		while (path[i] && path[i] != '-')
-			i++;
-		i++;
-	}
-	return (0);
-}
-
-
-char	*ft_get_room(char *room, char *link)
-{
-	int 	i;
-	int 	j;
-	int 	k;
-	char	*res;
-
-	k = 0;
-	i = 0;
-	if (room == NULL || link == NULL)
-		return (0);
-	while (link[i] != '-')
-		i++;
-	res = ft_strndup(link, i++);
-	k = ft_strequ(res, room);
-	if (!k)
-		return (res);
-	ft_strdel(&res);
-	j = i;
-	while (link[i])
-		i++;
-	res = (char*)ft_memalloc(sizeof(char) * (i - j + 1));
-	i = 0;
-	while (link[j])
-		res[i++] = link[j++];
-	return (res);
-}
-
-
-int		ft_find_room_intube(char *room, char *link)
-{
-	int 	i;
-	int 	j;
-	int		k;
-	char	*res;
-
-	i = 0;
-	j = 0;
-	if (room == NULL || link == NULL)
-		return (0);
-	while (link[i] != '-')
-		i++;
-	res = ft_strndup(link, i++);
-	k = ft_strequ(res, room);
-	ft_strdel(&res);
-	if (k)
-		return (1);
-	while (link[i] && room[j])
-	{
-		if (link[i] != room[j])
-			return (0);
-		i++;
-		j++;
-	}
-	return (1);
-}
-
 
 void		ft_find_nbroom(t_ants *info)
 {
@@ -216,23 +57,6 @@ char	*ft_remove_ifrepeat(char *rm, int *m,  char *path, char *room)
 	*m = clonem;
 	room = ft_get_last_inpath(path);
 	return (room);
-}
-
-
-char 	*ft_complete_path(char *path, char *room, int i, t_ants info)
-{
-	char *tmp;
-	char *tmpp;
-
-	tmpp = ft_get_room(room, info.tubes[i]);
-	tmp = path;
-	path = (ft_strjoin(tmp, "-"));
-	ft_strdel(&tmp);
-	tmp = path;
-	path = ft_strjoin(tmp, tmpp);
-	ft_strdel(&tmp);
-	ft_strdel(&tmpp);
-	return (path);
 }
 
 void	ft_find_nb_tubes(t_ants *info)
@@ -293,33 +117,6 @@ void	ft_save_path_ifrepeat(t_ants *info, char **clonepath)
 	}
 }
 
-void	ft_sort_tubes_and_repeat(t_ants *info, int *i)
-{
-	ft_move_tubes(info->tubes);
-	info->k = info->nb_tubes * 10;
-	info->nb_tubes--;
-	ft_strdel(&info->rm);
-	ft_strdel(&info->room);
-	info->room = ft_strdup(info->start);
-	info->m = 0;
-	*i = 0;
-}
-
-
-void	ft_feel_free(t_ants *info, char **clonepath)
-{
-	int l;
-
-	ft_strdel(&info->room);
-	ft_strdel(&info->rm);
-	ft_strdel(&info->path);
-	l = 0;
-	while (clonepath[l])
-		ft_strdel(&(clonepath[l++]));
-	ft_memdel((void**)clonepath);
-	free(clonepath);
-}
-
 void	ft_initializeb(t_ants *info, int *i)
 {
 	*i = 0;
@@ -336,8 +133,9 @@ void	ft_initializeb(t_ants *info, int *i)
 void	ft_into_the_while(char *tmp, int *i, char **allpath, t_ants *info)
 {
 	tmp = ft_get_room(info->room, info->tubes[*i]);
-	if (ft_find_room_intube(info->room, info->tubes[*i]) && (!ft_check_ifexist(tmp, info->path))
-			&& (!ft_find_room_intube(info->rm, info->tubes[*i])))
+	if (ft_find_room_intube(info->room, info->tubes[*i]) &&
+	(!ft_check_ifexist(tmp, info->path)) &&
+(!ft_find_room_intube(info->rm, info->tubes[*i])))
 	{
 		info->path = ft_complete_path(info->path, info->room, *i, *info);
 		if (info->room)

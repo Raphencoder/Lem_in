@@ -24,7 +24,9 @@ INC = lem_in.h
 
 SRCS_PATH = ./srcs/
 
-ALL_SRCS = main.c ft_norm.c ft_stock.c ft_names.c ft_error.c ft_verify.c ft_tubestr.c ft_room_number.c ft_check_ant.c ft_fill_path.c ft_move_tubes.c\
+ALL_SRCS = main.c ft_norm.c ft_stock.c ft_names.c ft_error.c ft_verify.c ft_tubestr.c ft_room_number.c ft_check_ant.c \
+ft_fill_path.c ft_move_tubes.c ft_feel_free.c ft_rm_last_one.c ft_sort_tubes_and_repeat.c ft_get_room.c ft_find_room_intube.c \
+ft_get_last_inpath.c ft_complete_path.c ft_check_ifexist.c
 
 SRCS = $(addprefix $(SRCS_PATH), $(ALL_SRCS))
 
