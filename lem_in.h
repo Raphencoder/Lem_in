@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem-in.h                                           :+:      :+:    :+:   */
+/*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 10:13:35 by alecott           #+#    #+#             */
-/*   Updated: 2018/04/23 11:17:15 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/04/26 12:41:17 by Raphael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,21 @@
 typedef struct	s_ants
 {
 	char	**rooms;
-	int		*rooms_state;
+	int	*rooms_state;
 	char	**tubes;
 	char	**names;
 	char	*start;
 	char	*end;
+	char	*room;
+	char	*rm;
+	char	*path;
+	int	nb_repeat;
+	int	l;
+	int	k;
+	int	j;
+	int	m;
 	int		nb_room;
+	int		nb_tubes;
 	int		nb_start;
 	int		nb_end;
 	int		nb_ant;
@@ -52,6 +61,6 @@ int		ft_tubestr(char *s1, char *s2);
 int		ft_verify(char *look, char *end, t_ants *info);
 int		ft_test(char **name, char *tube);
 int		ft_test2(char **tubes, char *room);
-void	ft_fill_path(t_ants info);
+void	ft_fill_path(t_ants *info);
 
 #endif

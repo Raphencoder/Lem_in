@@ -6,7 +6,7 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 09:57:46 by alecott           #+#    #+#             */
-/*   Updated: 2018/04/25 14:09:50 by Raphael          ###   ########.fr       */
+/*   Updated: 2018/04/26 11:55:07 by Raphael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ static void	ft_print(t_ants *info)
 		ft_putendl(info->tubes[i]);
 		i++;
 	}
+	ft_putstr("nb_room= ");
+	ft_putnbr(info->nb_room);
+	ft_putchar('\n');
 	ft_putstr("info.start= ");
 	ft_putendl(info->start);
 	ft_putstr("info.end= ");
@@ -63,7 +66,7 @@ int			main(void)
 		return (0);
 	}
 	ft_print(&info);
-	ft_fill_path(info);
+	ft_fill_path(&info);
 	while (1);
 	return (0);
 }
