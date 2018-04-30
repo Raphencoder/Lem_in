@@ -12,18 +12,18 @@
 
 #include "../lem_in.h"
 
-char		*ft_complete_path(char *path, char *room, int i, t_ants info)
+int			ft_nbrooms_in_path(char *path)
 {
-	char	*tmp;
-	char	*tmpp;
+	int		ret;
+	int		i;
 
-	tmpp = ft_get_room(room, info.tubes_names[i]);
-	tmp = path;
-	path = (ft_strjoin(tmp, "-"));
-	ft_strdel(&tmp);
-	tmp = path;
-	path = ft_strjoin(tmp, tmpp);
-	ft_strdel(&tmp);
-	ft_strdel(&tmpp);
-	return (path);
+	i = 0;
+	ret = 1;
+	while (path[i])
+	{
+		if (path[i] == '-')
+			ret++;
+		i++;
+	}
+	return (ret);
 }

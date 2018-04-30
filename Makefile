@@ -6,7 +6,7 @@
 #    By: alecott <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/29 09:33:30 by alecott           #+#    #+#              #
-#    Updated: 2018/04/20 12:19:03 by rkrief           ###   ########.fr        #
+#    Updated: 2018/04/27 10:40:18 by rkrief           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,14 @@ INC = lem_in.h
 
 SRCS_PATH = ./srcs/
 
-ALL_SRCS = main.c ft_norm.c ft_stock.c ft_names.c ft_error.c ft_verify.c ft_tubestr.c ft_room_number.c ft_check_ant.c \
-ft_fill_path.c ft_move_tubes.c ft_feel_free.c ft_rm_last_one.c ft_sort_tubes_and_repeat.c ft_get_room.c ft_find_room_intube.c \
-ft_get_last_inpath.c ft_complete_path.c ft_check_ifexist.c ft_add_and_delete.c ft_check_path.c ft_find_nbroom.c ft_remove_ifrepeat.c \
-ft_choose_nbofrm.c ft_find_nb_tubes.c \
-
+ALL_SRCS = main.c ft_norm.c ft_stock.c ft_names.c ft_error.c ft_verify.c \
+		   ft_tubestr.c ft_room_number.c ft_fill_path.c \
+		   ft_move_tubes.c ft_feel_free.c ft_rm_last_one.c \
+		   ft_sort_tubes_and_repeat.c ft_get_room.c ft_find_room_intube.c \
+		   ft_get_last_inpath.c ft_complete_path.c ft_check_ifexist.c \
+		   ft_add_and_delete.c ft_check_path.c ft_find_nbroom.c \
+		   ft_remove_ifrepeat.c ft_choose_nbofrm.c ft_find_nb_tubes.c \
+		   ft_tubes_names.c ft_nbrooms_in_path.c \
 
 SRCS = $(addprefix $(SRCS_PATH), $(ALL_SRCS))
 

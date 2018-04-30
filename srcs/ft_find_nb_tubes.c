@@ -17,7 +17,7 @@ void	ft_find_nb_tubes(t_ants *info)
 	int	i;
 
 	i = 0;
-	while (info->tubes[i])
+	while (info->tubes_names[i])
 		i++;
 	i--;
 	info->nb_tubes = i;

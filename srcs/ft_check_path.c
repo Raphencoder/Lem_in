@@ -12,7 +12,7 @@
 
 #include "../lem_in.h"
 
-int     ft_check_path(char *path, char **allpath)
+int		ft_check_path(char *path, char **allpath)
 {
 	int i;
 

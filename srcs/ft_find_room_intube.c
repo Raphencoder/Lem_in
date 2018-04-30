@@ -14,8 +14,8 @@
 
 int		ft_find_room_intube(char *room, char *link)
 {
-	int 	i;
-	int 	j;
+	int		i;
+	int		j;
 	int		k;
 	char	*res;
 

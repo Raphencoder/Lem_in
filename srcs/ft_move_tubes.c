@@ -6,16 +6,16 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/04/26 12:59:20 by Raphael          ###   ########.fr       */
+/*   Updated: 2018/04/27 11:43:24 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-void    ft_move_two(char **tubes)
+void		ft_move_two(char **tubes)
 {
-	int i;
-	char *clone;
+	int		i;
+	char	*clone;
 
 	i = 0;
 	while (tubes[i] && tubes[i + 1])
@@ -24,19 +24,16 @@ void    ft_move_two(char **tubes)
 		tubes[i + 1] = tubes[i];
 		tubes[i++] = clone;
 	}
-
 }
 
-
-void	ft_move_triple(char **tubes)
+void		ft_move_triple(char **tubes)
 {
-	int i;
-	int j;
-	char *clone;
+	int		i;
+	int		j;
+	char	*clone;
 
 	i = 0;
 	j = 0;
-
 	while (tubes[i] && tubes[i + 2])
 	{
 		clone = tubes[i];
@@ -46,12 +43,11 @@ void	ft_move_triple(char **tubes)
 	}
 }
 
-
-void    ft_move_back(char **tubes)
+void		ft_move_back(char **tubes)
 {
-	int i;
-	int j;
-	char *clone;
+	int		i;
+	int		j;
+	char	*clone;
 
 	i = 0;
 	j = 0;
@@ -64,10 +60,9 @@ void    ft_move_back(char **tubes)
 		tubes[j++] = tubes[i];
 		tubes[i--] = clone;
 	}
-
 }
 
-void    ft_move_tubes(char **tubes)
+void		ft_move_tubes(char **tubes)
 {
 	static int l;
 

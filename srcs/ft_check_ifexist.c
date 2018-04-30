@@ -12,7 +12,7 @@
 
 #include "../lem_in.h"
 
-int     ft_check_ifexist(char *room, char *path)
+int		ft_check_ifexist(char *room, char *path)
 {
 	int i;
 	int j;

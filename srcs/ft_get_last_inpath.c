@@ -12,12 +12,12 @@
 
 #include "../lem_in.h"
 
-char    *ft_get_last_inpath(char *path)
+char			*ft_get_last_inpath(char *path)
 {
-	int     i;
-	int     k;
-	int     j;
-	char    *res;
+	int			i;
+	int			k;
+	int			j;
+	char		*res;
 
 	i = 0;
 	k = 0;

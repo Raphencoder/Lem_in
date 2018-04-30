@@ -14,9 +14,9 @@
 
 char	*ft_get_room(char *room, char *link)
 {
-	int 	i;
-	int 	j;
-	int 	k;
+	int		i;
+	int		j;
+	int		k;
 	char	*res;
 
 	k = 0;

@@ -1,57 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   ft_tubes_names.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/20 15:50:21 by alecott           #+#    #+#             */
-/*   Updated: 2018/03/02 14:03:36 by alecott          ###   ########.fr       */
+/*   Created: 2018/04/25 17:07:54 by alecott           #+#    #+#             */
+/*   Updated: 2018/04/27 10:09:48 by alecott          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-void		ft_modify(char *path, int k)
+static int	 ft_nbtubes(t_ants *info)
 {
-	char	*tmp;
-	int		i;
+	unsigned int	i;
+	unsigned int	len;
 
 	i = 0;
-	tmp = ft_strdup(path);
-	ft_strclr(path);
-	while (i < k)
+	len = 0;
+	while (info->tubes[i])
 	{
-		path[i] = tmp[i];
+		if (info->tubes[i][0] != '#')
+			len++;
 		i++;
 	}
-	ft_strdel(&tmp);
+	return (len);
 }
 
-char		*ft_rm_last_one(char *path)
+void		ft_tubes_names(t_ants *info)
 {
 	int		i;
 	int		j;
-	int		k;
-	char	*res;
+	int		len;
 
 	i = 0;
-	while (path[i])
-		i++;
-	i--;
-	k = i;
-	while (path[i] != '-' && i >= 0)
-		i--;
-	res = (char*)ft_memalloc(sizeof(char) * (k - i + 1));
-	k = i;
 	j = 0;
-	if (i == 0)
-		return (NULL);
-	while (path[i])
+	len = ft_nbtubes(info);
+	info->tubes_names = (char**)ft_memalloc(sizeof(char*) * (len + 1));
+	while (info->tubes[i])
 	{
-		if (path[i++] != '-')
-			res[j++] = path[i - 1];
+		if (info->tubes[i][0] != '#')
+		{
+			info->tubes_names[j] = info->tubes[i];
+			j++;
+		}
+		i++;
 	}
-	ft_modify(path, k);
-	return (res);
+	info->tubes_names[j] = NULL;
 }
