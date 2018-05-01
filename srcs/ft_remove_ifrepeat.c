@@ -6,13 +6,13 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/04/30 18:18:50 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/05/01 10:37:28 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-char	*ft_remove_ifrepeat(char *rm, int *m,  char *path, char *room)
+char	*ft_remove_ifrepeat(char *rm, int *m, char *path, char *room)
 {
 	int	clonem;
 

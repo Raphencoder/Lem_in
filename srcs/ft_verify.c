@@ -6,7 +6,7 @@
 /*   By: rkrief <rkrief@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 18:14:50 by rkrief            #+#    #+#             */
-/*   Updated: 2018/03/05 17:13:24 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/05/01 10:43:50 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static char	*ft_cut(char *s1)
 {
-	int i;
-	char *res;
+	int		i;
+	char	*res;
 
 	i = 0;
 	while (s1[i] != '-')
@@ -23,7 +23,7 @@ static char	*ft_cut(char *s1)
 	res = (char*)ft_memalloc(sizeof(char) * (i + 2));
 	i = 0;
 	while (s1[i] != '-')
-	{	
+	{
 		res[i] = s1[i];
 		i++;
 	}
@@ -81,8 +81,9 @@ static int	ft_chck(char **stock, char *check)
 
 static void	ft_fill(char **res, char *look, char **stock, int *j)
 {
-	int i;
-	char *tmp;
+	int		i;
+	char	*tmp;
+
 	i = 0;
 	while (i < ft_tablen(res))
 	{
@@ -98,11 +99,11 @@ static void	ft_fill(char **res, char *look, char **stock, int *j)
 }
 
 int			ft_verify(char *start, char *end, t_ants *info)
-{	
-	char **stock;
-	int i;
-	int j;
-	int so;
+{
+	char	**stock;
+	int		i;
+	int		j;
+	int		so;
 
 	j = 0;
 	i = 1;

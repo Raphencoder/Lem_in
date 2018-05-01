@@ -6,7 +6,7 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 10:13:15 by alecott           #+#    #+#             */
-/*   Updated: 2018/04/10 10:33:51 by alecott          ###   ########.fr       */
+/*   Updated: 2018/05/01 10:38:11 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	ft_start(t_ants *info)
 				len++;
 			while (info->names[j])
 			{
-				if (ft_strnequ(info->names[j], info->rooms[i + 1], len) && 
+				if (ft_strnequ(info->names[j], info->rooms[i + 1], len) &&
 					info->rooms[i + 1][len] == ' ')
 					info->start = info->names[j];
 				j++;

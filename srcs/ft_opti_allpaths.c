@@ -6,7 +6,7 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 08:50:08 by alecott           #+#    #+#             */
-/*   Updated: 2018/04/30 16:32:31 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/05/01 10:41:52 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ char	*ft_strnmdup(char *str, int start, int end)
 
 int		ft_exist(char *path, char *savepath)
 {
-	int 	i;
-	int 	j;
+	int		i;
+	int		j;
 	char	*tmp;
 
 	j = 0;
@@ -55,11 +55,10 @@ int		ft_exist(char *path, char *savepath)
 	return (0);
 }
 
-
-char		*ft_add_in_path(char *path, char *savepath, t_ants info)
+char	*ft_add_in_path(char *path, char *savepath, t_ants info)
 {
-	int 	i;
-	int 	j;
+	int		i;
+	int		j;
 	char	*tmp;
 	char	*tmpp;
 
@@ -76,8 +75,8 @@ char		*ft_add_in_path(char *path, char *savepath, t_ants info)
 		tmp = ft_strnmdup(path, j, i);
 		if (ft_strequ(tmp, info.end))
 		{
-		  	ft_strdel(&tmp);
-		   	return (savepath);	
+			ft_strdel(&tmp);
+			return (savepath);
 		}
 		if (savepath == NULL)
 			savepath = ft_strdup(tmp);
@@ -98,8 +97,8 @@ char		*ft_add_in_path(char *path, char *savepath, t_ants info)
 
 char	**ft_opti_allpaths(t_ants *info, char **path)
 {
-	int 	i;
-	int 	j;
+	int		i;
+	int		j;
 	char	*savepath;
 	char	**pathopti;
 

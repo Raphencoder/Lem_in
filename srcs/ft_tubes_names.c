@@ -6,13 +6,13 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 17:07:54 by alecott           #+#    #+#             */
-/*   Updated: 2018/04/27 10:09:48 by alecott          ###   ########.fr       */
+/*   Updated: 2018/05/01 10:45:01 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-static int	 ft_nbtubes(t_ants *info)
+static int		ft_nbtubes(t_ants *info)
 {
 	unsigned int	i;
 	unsigned int	len;
@@ -28,7 +28,7 @@ static int	 ft_nbtubes(t_ants *info)
 	return (len);
 }
 
-void		ft_tubes_names(t_ants *info)
+void			ft_tubes_names(t_ants *info)
 {
 	int		i;
 	int		j;
