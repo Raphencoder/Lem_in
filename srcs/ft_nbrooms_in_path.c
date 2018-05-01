@@ -6,13 +6,13 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/04/26 12:59:20 by Raphael          ###   ########.fr       */
+/*   Updated: 2018/04/27 16:24:32 by alecott          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-int			ft_nbrooms_in_path(char *path)
+int	ft_nbrooms_in_path(char *path)
 {
 	int		ret;
 	int		i;

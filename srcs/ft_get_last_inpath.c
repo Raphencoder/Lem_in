@@ -6,18 +6,18 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/04/26 12:59:20 by Raphael          ###   ########.fr       */
+/*   Updated: 2018/04/30 18:17:00 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-char			*ft_get_last_inpath(char *path)
+char		*ft_get_last_inpath(char *path)
 {
-	int			i;
-	int			k;
-	int			j;
-	char		*res;
+	int		i;
+	int		k;
+	int		j;
+	char	*res;
 
 	i = 0;
 	k = 0;

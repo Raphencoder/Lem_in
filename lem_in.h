@@ -6,7 +6,7 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 10:13:35 by alecott           #+#    #+#             */
-/*   Updated: 2018/04/27 10:26:35 by alecott          ###   ########.fr       */
+/*   Updated: 2018/04/30 18:27:03 by alecott          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ typedef struct	s_ants
 	char	*room;
 	char	*rm;
 	char	*path;
+	char	**tmpp;
+	char 	*tmp;
+	char	**tmp1;
 	int		nb_repeat;
 	int		l;
 	int		k;
@@ -68,5 +71,10 @@ void	ft_find_nb_tubes(t_ants *info);
 void	ft_algo(t_ants *info, char **path);
 void	ft_tubes_names(t_ants *info);
 int		ft_nbrooms_in_path(char *path);
+char	**ft_sort_paths(char **path);
+char	*ft_sub_path(char *path);
+char	**ft_opti_allpaths(t_ants *info, char **path);
+void	ft_free_all(char **path, t_ants *info);
+char	*ft_take_room(char *path);
 
 #endif

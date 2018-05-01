@@ -6,13 +6,13 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/04/27 11:43:24 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/04/30 18:18:08 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-void		ft_move_two(char **tubes)
+void	ft_move_two(char **tubes)
 {
 	int		i;
 	char	*clone;
@@ -26,7 +26,7 @@ void		ft_move_two(char **tubes)
 	}
 }
 
-void		ft_move_triple(char **tubes)
+void	ft_move_triple(char **tubes)
 {
 	int		i;
 	int		j;
@@ -43,7 +43,7 @@ void		ft_move_triple(char **tubes)
 	}
 }
 
-void		ft_move_back(char **tubes)
+void	ft_move_back(char **tubes)
 {
 	int		i;
 	int		j;
@@ -62,7 +62,7 @@ void		ft_move_back(char **tubes)
 	}
 }
 
-void		ft_move_tubes(char **tubes)
+void	ft_move_tubes(char **tubes)
 {
 	static int l;
 

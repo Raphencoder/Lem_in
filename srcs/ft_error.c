@@ -6,7 +6,7 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 15:50:21 by alecott           #+#    #+#             */
-/*   Updated: 2018/03/02 14:03:36 by alecott          ###   ########.fr       */
+/*   Updated: 2018/04/30 18:12:09 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static int	ft_error3(t_ants *info)
 		ft_strdel(&str);
 		i++;
 	}
-//	return (1);
 	return (ft_verify(info->start, info->end, info));
 }
 

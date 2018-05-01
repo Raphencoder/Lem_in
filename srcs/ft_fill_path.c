@@ -6,7 +6,7 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/04/27 11:34:03 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/04/30 18:25:14 by alecott          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,25 @@ void		ft_fill_path(t_ants *info)
 	char	**path;
 	char	**allpath;
 
-	i = 0;
+	info->tmp = NULL;
 	allpath = (char**)ft_memalloc(sizeof(char*) * (500 + 1));
 	ft_find_nb_tubes(info);
 	ft_find_nbroom(info);
 	path = ft_findlink(info, allpath);
-	while (path[i])
-		printf("allpath[i] = %s\n", path[i++]);
+	info->tmpp = path;
+	path = ft_sort_paths(info->tmpp);
 	i = 0;
 	while (path[i])
-		ft_strdel(&path[i++]);
-	ft_memdel((void**)path);
-	i = 0;
-	while (allpath[i])
-		ft_strdel(&allpath[i++]);
-	ft_memdel((void**)allpath);
+	{
+		info->tmp = path[i];
+		path[i++] = ft_sub_path(info->tmp);
+		ft_strdel(&info->tmp);
+	}
+	ft_strdel(&info->tmp);
+	info->tmp1 = path;
+	path = ft_opti_allpaths(info, info->tmp1);
+	info->room_ant = (char**)ft_memalloc(sizeof(char*) * (info->nb_ant + 1));
+	info->path_ant = (char**)ft_memalloc(sizeof(char*) * (info->nb_ant + 1));
+	ft_algo(info, path);
+	ft_free_all(path, info);
 }
