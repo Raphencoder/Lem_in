@@ -6,7 +6,7 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/04/30 18:25:14 by alecott          ###   ########.fr       */
+/*   Updated: 2018/05/01 15:50:10 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void		ft_fill_path(t_ants *info)
 	char	**path;
 	char	**allpath;
 
+	
+	ft_putchar('A');
 	info->tmp = NULL;
 	allpath = (char**)ft_memalloc(sizeof(char*) * (500 + 1));
 	ft_find_nb_tubes(info);
@@ -100,6 +102,7 @@ void		ft_fill_path(t_ants *info)
 	info->tmpp = path;
 	path = ft_sort_paths(info->tmpp);
 	i = 0;
+	ft_putchar('A');
 	while (path[i])
 	{
 		info->tmp = path[i];
@@ -108,9 +111,26 @@ void		ft_fill_path(t_ants *info)
 	}
 	ft_strdel(&info->tmp);
 	info->tmp1 = path;
-	path = ft_opti_allpaths(info, info->tmp1);
+	ft_ultim_path(info, path);
+//	path = ft_opti_allpaths(info, path, NULL);
+	i = 0;
+//	while (path[i])
+//		ft_strdel(&path[i++]);
+//	ft_memdel((void**)path);
+
+	ft_putchar('\n');
+	int y;
+	y = 0;
+	while (path[y])
+		ft_putendl(path[y++]);
+	ft_putchar('\n');
 	info->room_ant = (char**)ft_memalloc(sizeof(char*) * (info->nb_ant + 1));
 	info->path_ant = (char**)ft_memalloc(sizeof(char*) * (info->nb_ant + 1));
-	ft_algo(info, path);
-	ft_free_all(path, info);
+//	ft_algo(info, path);
+	y = 0;
+	while (info->ultim_path[y])
+		ft_putendl(info->ultim_path[y++]);
+	ft_putchar('\n');
+	ft_algo(info, info->ultim_path);
+//	ft_free_all(info->ultim_path, info);
 }

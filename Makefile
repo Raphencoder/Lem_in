@@ -6,7 +6,7 @@
 #    By: alecott <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/29 09:33:30 by alecott           #+#    #+#              #
-#    Updated: 2018/04/30 18:31:14 by alecott          ###   ########.fr        #
+#    Updated: 2018/05/01 11:13:44 by rkrief           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,8 @@ ALL_SRCS = main.c ft_norm.c ft_stock.c ft_names.c ft_error.c ft_verify.c \
 		   ft_get_last_inpath.c ft_complete_path.c ft_check_ifexist.c \
 		   ft_add_and_delete.c ft_check_path.c ft_find_nbroom.c \
 		   ft_remove_ifrepeat.c ft_choose_nbofrm.c ft_find_nb_tubes.c \
-		   ft_tubes_names.c ft_nbrooms_in_path.c ft_sort_paths.c ft_sub_path.c\
-		   ft_algo.c ft_opti_allpaths.c ft_free_all.c ft_take_room.c \
+		   ft_tubes_names.c ft_nbrooms_in_path.c ft_sort_paths.c ft_sub_path.c \
+		   ft_algo.c ft_opti_allpaths.c ft_free_all.c ft_take_room.c ft_ultim_path.c \
 
 SRCS = $(addprefix $(SRCS_PATH), $(ALL_SRCS))
 

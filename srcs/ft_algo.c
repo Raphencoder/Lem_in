@@ -6,7 +6,7 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 13:06:46 by alecott           #+#    #+#             */
-/*   Updated: 2018/04/30 18:30:21 by alecott          ###   ########.fr       */
+/*   Updated: 2018/05/01 13:32:39 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,5 @@ void		ft_algo(t_ants *info, char **all_paths)
 			ants++;
 		}
 		ft_putchar('\n');
-	}
-	while (all_paths[ants])
-	{
-		ft_strdel(&all_paths[ants]);
-		ants++;
 	}
 }
