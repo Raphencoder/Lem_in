@@ -6,7 +6,7 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 13:06:46 by alecott           #+#    #+#             */
-/*   Updated: 2018/05/01 13:32:39 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/05/02 13:35:39 by alecott          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static int	ft_opti_path(t_ants *info, char *path)
 	int		i;
 
 	i = 0;
+	if (ft_strequ(path, info->end))
+		return (1);
 	while (info->path_ant[i])
 	{
 		if (info->path_ant[i] != NULL)
@@ -71,8 +73,10 @@ static int	ft_opti_path(t_ants *info, char *path)
 static void	ft_ant_path(int ants, t_ants *info, char **all_paths)
 {
 	int		i;
+	int		j;
 
 	i = 0;
+	j = 0;
 	while (all_paths[i])
 	{
 		if (ft_opti_path(info, all_paths[i]))
@@ -104,5 +108,11 @@ void		ft_algo(t_ants *info, char **all_paths)
 			ants++;
 		}
 		ft_putchar('\n');
+	}
+	ants = 0;
+	while (all_paths[ants])
+	{
+		ft_strdel(&all_paths[ants]);
+		ants++;
 	}
 }

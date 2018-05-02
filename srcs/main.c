@@ -6,7 +6,7 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 09:57:46 by alecott           #+#    #+#             */
-/*   Updated: 2018/05/01 10:46:29 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/05/02 18:45:36 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ int			main(void)
 	}
 	ft_print(&info);
 	ft_fill_path(&info);
+	int i;
+	i = 0;
+	while (info.ultim_path[i])
+		ft_strdel(&info.ultim_path[i++]);
+	ft_memdel((void**)info.ultim_path);
+	free(info.ultim_path);
 	while (1);
 	return (0);
 }

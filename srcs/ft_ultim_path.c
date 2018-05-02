@@ -6,7 +6,7 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 10:51:05 by rkrief            #+#    #+#             */
-/*   Updated: 2018/05/02 13:08:18 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/05/02 18:53:09 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ char	*ft_add_in_path2(char *path, char *savepath, t_ants info)
 		if (ft_strequ(tmp, info.end))
 		{
 			ft_strdel(&tmp);
+			if (savepath == NULL)
+				savepath = ft_strdup(info.end);
 			return (savepath);
 		}
 		if (savepath == NULL)
@@ -121,6 +123,9 @@ void	ft_ultim_path(t_ants *info, char **path)
 		if (nb_path > info->nb_repeat)
 		{
 			info->nb_repeat = nb_path;
+			if (info->ultim_path != NULL){
+				ft_free_tab(info->ultim_path);
+				free(info->ultim_path);}
 			info->ultim_path = ft_copy_tab(final);
 		}
 		ft_free_tab(final);

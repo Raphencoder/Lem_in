@@ -6,7 +6,7 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/05/02 12:53:10 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/05/02 18:48:59 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,13 @@ void		ft_fill_path(t_ants *info)
 	ft_strdel(&info->tmp);
 	info->tmp1 = path;
 	ft_ultim_path(info, path);
+	info->tmpp = info->ultim_path;
+	info->ultim_path = ft_sort_paths(info->tmpp);
 	info->room_ant = (char**)ft_memalloc(sizeof(char*) * (info->nb_ant + 1));
 	info->path_ant = (char**)ft_memalloc(sizeof(char*) * (info->nb_ant + 1));
 	ft_algo(info, info->ultim_path);
+	i = 0;
+	while (info->tmpp[i])
+		ft_strdel(&info->tmpp[i++]);
+	ft_memdel((void**)info->tmpp);
 }
