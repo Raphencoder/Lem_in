@@ -6,7 +6,7 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 10:51:05 by rkrief            #+#    #+#             */
-/*   Updated: 2018/05/01 16:14:35 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/05/02 13:08:18 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,13 @@ void	ft_free_tab(char **tab)
 	while (tab[i])
 		ft_strdel(&tab[i++]);
 	ft_memdel((void**)tab);
-//	free(tab);
 }
 
 char	**ft_add_clone_and_path(char *path, char **clone)
 {
 	char	**final;
-	int 	i;
-	int 	j;
+	int		i;
+	int		j;
 
 	j = 0;
 	i = ft_nb_element(clone);
@@ -54,13 +53,12 @@ char	**ft_add_clone_and_path(char *path, char **clone)
 	return (final);
 }
 
-
 char	*ft_add_in_path2(char *path, char *savepath, t_ants info)
 {
-	int     i;
-	int     j;
-	char    *tmp;
-	char    *tmpp;
+	int		i;
+	int		j;
+	char	*tmp;
+	char	*tmpp;
 
 	i = 0;
 	j = 0;
@@ -92,25 +90,6 @@ char	*ft_add_in_path2(char *path, char *savepath, t_ants info)
 		i++;
 	}
 	return (savepath);
-}
-
-
-char	**ft_copy_tab(char **tab)
-{
-	int 	i;
-	char	**final;
-
-	i = 0;
-	while(tab[i])
-		i++;
-	final = (char**)ft_memalloc(sizeof(char*) * (i + 1));
-	i = 0;
-	while (tab[i])
-	{
-		final[i] = ft_strdup(tab[i]);
-		i++;
-	}
-	return (final);
 }
 
 void	ft_ultim_path(t_ants *info, char **path)

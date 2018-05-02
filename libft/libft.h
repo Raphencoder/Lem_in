@@ -6,7 +6,7 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 08:48:09 by alecott           #+#    #+#             */
-/*   Updated: 2018/05/01 11:17:20 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/05/02 13:00:22 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ int				ft_tabchr(char **tab, const char *s);
 int				ft_tabstr(char **tab, const char *s, int mode);
 void			ft_puttab(char **tab);
 char			**ft_tabdup(char **tab);
+char			**ft_copy_tab(char **tab);
 
 #endif
