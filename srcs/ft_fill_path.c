@@ -6,13 +6,13 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/05/02 18:48:59 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/05/03 14:15:50 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-void		ft_save_path_ifrepeat(t_ants *info, char **clonepath)
+static void		ft_save_path_ifrepeat(t_ants *info, char **clonepath)
 {
 	info->nb_repeat++;
 	if (info->nb_repeat > info->nb_tubes / 2)
@@ -24,7 +24,7 @@ void		ft_save_path_ifrepeat(t_ants *info, char **clonepath)
 	}
 }
 
-void		ft_initializeb(t_ants *info, int *i)
+static void		ft_initializeb(t_ants *info, int *i)
 {
 	*i = 0;
 	info->nb_repeat = 0;
@@ -37,7 +37,7 @@ void		ft_initializeb(t_ants *info, int *i)
 	info->k = info->nb_tubes * 10;
 }
 
-void		ft_into_the_while(char *tmp, int *i, char **allpath, t_ants *info)
+static void		ft_into_the_while(char *tmp, int *i, char **p, t_ants *info)
 {
 	tmp = ft_get_room(info->room, info->tubes_names[*i]);
 	if (ft_find_room_intube(info->room, info->tubes_names[*i]) &&
@@ -50,7 +50,7 @@ void		ft_into_the_while(char *tmp, int *i, char **allpath, t_ants *info)
 		info->room = tmp;
 		if (ft_strequ(info->room, info->end))
 		{
-			ft_add_and_delete(info, allpath);
+			ft_add_and_delete(info, p);
 			*i = -1;
 		}
 	}
@@ -59,7 +59,7 @@ void		ft_into_the_while(char *tmp, int *i, char **allpath, t_ants *info)
 	*i = *i + 1;
 }
 
-char		**ft_findlink(t_ants *info, char **allpath)
+static char		**ft_findlink(t_ants *info, char **allpath)
 {
 	char	*tmp;
 	char	**clonepath;
@@ -86,7 +86,7 @@ char		**ft_findlink(t_ants *info, char **allpath)
 	return (allpath);
 }
 
-void		ft_fill_path(t_ants *info)
+void			ft_fill_path(t_ants *info)
 {
 	int		i;
 	char	**path;
@@ -106,16 +106,5 @@ void		ft_fill_path(t_ants *info)
 		path[i++] = ft_sub_path(info->tmp);
 		ft_strdel(&info->tmp);
 	}
-	ft_strdel(&info->tmp);
-	info->tmp1 = path;
-	ft_ultim_path(info, path);
-	info->tmpp = info->ultim_path;
-	info->ultim_path = ft_sort_paths(info->tmpp);
-	info->room_ant = (char**)ft_memalloc(sizeof(char*) * (info->nb_ant + 1));
-	info->path_ant = (char**)ft_memalloc(sizeof(char*) * (info->nb_ant + 1));
-	ft_algo(info, info->ultim_path);
-	i = 0;
-	while (info->tmpp[i])
-		ft_strdel(&info->tmpp[i++]);
-	ft_memdel((void**)info->tmpp);
+	ft_nextoffind(info, path);
 }

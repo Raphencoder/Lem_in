@@ -6,7 +6,7 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 13:06:46 by alecott           #+#    #+#             */
-/*   Updated: 2018/05/02 13:35:39 by alecott          ###   ########.fr       */
+/*   Updated: 2018/05/03 13:17:25 by alecott          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,14 @@ static void	ft_moove(int ants, t_ants *info)
 	tmp = ft_take_room(info->path_ant[ants]);
 	ft_strdel(&info->room_ant[ants]);
 	info->room_ant[ants] = tmp;
+	if (ants > 0 && (!ft_strequ(info->room_ant[ants - 1], "finished") ||
+			!ft_strequ(info->path_ant[ants - 1], info->end)))
+		write(1, " ", 1);
 	write(1, "L", 1);
 	ft_putnbr(ants + 1);
 	write(1, "-", 1);
 	ft_putstr(info->room_ant[ants]);
-	write(1, " ", 1);
-	if (ft_nbrooms_in_path(info->path_ant[ants]) <= 1)
-	{
-		ft_strdel(&info->path_ant[ants]);
-		info->path_ant[ants] = "finished";
-	}
-	else
+	if (ft_nbrooms_in_path(info->path_ant[ants]) > 1)
 	{
 		tmp2 = ft_sub_path(info->path_ant[ants]);
 		ft_strdel(&info->path_ant[ants]);
@@ -74,12 +71,16 @@ static void	ft_ant_path(int ants, t_ants *info, char **all_paths)
 {
 	int		i;
 	int		j;
+	int		diff_path;
 
 	i = 0;
 	j = 0;
 	while (all_paths[i])
 	{
-		if (ft_opti_path(info, all_paths[i]))
+		diff_path = ft_nbrooms_in_path(all_paths[i]) -
+			ft_nbrooms_in_path(all_paths[0]);
+		if (ft_opti_path(info, all_paths[i]) &&
+				diff_path <= info->nb_ant - (ants + 1))
 		{
 			info->path_ant[ants] = ft_strdup(all_paths[i]);
 			return ;
@@ -99,20 +100,15 @@ void		ft_algo(t_ants *info, char **all_paths)
 		ants = 0;
 		while (ants < info->nb_ant)
 		{
-			if (info->path_ant[ants] != NULL)
+			if (ft_finished(ants, info))
+				over++;
+			else if (info->path_ant[ants] != NULL)
 				ft_moove(ants, info);
 			else
 				ft_ant_path(ants, info, all_paths);
-			if (ft_finished(ants, info))
-				over++;
 			ants++;
 		}
-		ft_putchar('\n');
-	}
-	ants = 0;
-	while (all_paths[ants])
-	{
-		ft_strdel(&all_paths[ants]);
-		ants++;
+		if (over != info->nb_ant)
+			ft_putchar('\n');
 	}
 }

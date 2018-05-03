@@ -6,33 +6,13 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 10:51:05 by rkrief            #+#    #+#             */
-/*   Updated: 2018/05/02 18:53:09 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/05/03 14:42:43 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-int		ft_nb_element(char **tab)
-{
-	int i;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
-}
-
-void	ft_free_tab(char **tab)
-{
-	int i;
-
-	i = 0;
-	while (tab[i])
-		ft_strdel(&tab[i++]);
-	ft_memdel((void**)tab);
-}
-
-char	**ft_add_clone_and_path(char *path, char **clone)
+static char		**ft_add_clone_and_path(char *path, char **clone)
 {
 	char	**final;
 	int		i;
@@ -53,7 +33,24 @@ char	**ft_add_clone_and_path(char *path, char **clone)
 	return (final);
 }
 
-char	*ft_add_in_path2(char *path, char *savepath, t_ants info)
+static void		ft_next_add(char **savepath, char *tmp, char *tmpp, int *i)
+{
+	if (*savepath == NULL)
+		*savepath = ft_strdup(tmp);
+	else
+	{
+		tmpp = *savepath;
+		*savepath = ft_strjoin(tmpp, "-");
+		ft_strdel(&tmpp);
+		tmpp = *savepath;
+		*savepath = ft_strjoin(tmpp, tmp);
+	}
+	ft_strdel(&tmp);
+	ft_strdel(&tmpp);
+	*i = *i + 1;
+}
+
+static char		*ft_add_in_path2(char *path, char *savepath, t_ants info)
 {
 	int		i;
 	int		j;
@@ -77,24 +74,30 @@ char	*ft_add_in_path2(char *path, char *savepath, t_ants info)
 				savepath = ft_strdup(info.end);
 			return (savepath);
 		}
-		if (savepath == NULL)
-			savepath = ft_strdup(tmp);
-		else
-		{
-			tmpp = savepath;
-			savepath = ft_strjoin(tmpp, "-");
-			ft_strdel(&tmpp);
-			tmpp = savepath;
-			savepath = ft_strjoin(tmpp, tmp);
-		}
-		ft_strdel(&tmp);
-		ft_strdel(&tmpp);
-		i++;
+		ft_next_add(&savepath, tmp, tmpp, &i);
 	}
 	return (savepath);
 }
 
-void	ft_ultim_path(t_ants *info, char **path)
+static void		ft_ultim_next(char **c, char **f, int nb_path, t_ants *info)
+{
+	free(c);
+	nb_path = ft_nb_element(f);
+	if (nb_path > info->nb_repeat)
+	{
+		info->nb_repeat = nb_path;
+		if (info->ultim_path != NULL)
+		{
+			ft_free_tab(info->ultim_path);
+			free(info->ultim_path);
+		}
+		info->ultim_path = ft_copy_tab(f);
+	}
+	ft_free_tab(f);
+	free(f);
+}
+
+void			ft_ultim_path(t_ants *info, char **path)
 {
 	int		i;
 	int		nb_path;
@@ -117,19 +120,7 @@ void	ft_ultim_path(t_ants *info, char **path)
 		}
 		clone = ft_opti_allpaths(info, path, &savepath);
 		ft_strdel(&savepath);
-		final = ft_add_clone_and_path(path[i], clone);
-		free(clone);
-		nb_path = ft_nb_element(final);
-		if (nb_path > info->nb_repeat)
-		{
-			info->nb_repeat = nb_path;
-			if (info->ultim_path != NULL){
-				ft_free_tab(info->ultim_path);
-				free(info->ultim_path);}
-			info->ultim_path = ft_copy_tab(final);
-		}
-		ft_free_tab(final);
-		free(final);
-		i++;
+		final = ft_add_clone_and_path(path[i++], clone);
+		ft_ultim_next(clone, final, nb_path, info);
 	}
 }

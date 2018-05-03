@@ -6,13 +6,13 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 08:50:08 by alecott           #+#    #+#             */
-/*   Updated: 2018/05/02 17:52:47 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/05/03 14:17:22 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-int		ft_exist(char *path, char *savepath)
+static int		ft_exist(char *path, char *savepath)
 {
 	int		i;
 	int		j;
@@ -39,7 +39,19 @@ int		ft_exist(char *path, char *savepath)
 	return (0);
 }
 
-char	*ft_add_in_path(char *path, char **savepath, t_ants info)
+static void		ft_next(char *tmpp, char ***savepath, char *tmp, int *i)
+{
+	tmpp = **savepath;
+	**savepath = ft_strjoin(tmpp, "-");
+	ft_strdel(&tmpp);
+	tmpp = **savepath;
+	**savepath = ft_strjoin(tmpp, tmp);
+	ft_strdel(&tmp);
+	ft_strdel(&tmpp);
+	*i = *i + 1;
+}
+
+static char		*ft_add_in_path(char *path, char **savepath, t_ants info)
 {
 	int		i;
 	int		j;
@@ -61,19 +73,12 @@ char	*ft_add_in_path(char *path, char **savepath, t_ants info)
 			ft_strdel(&tmp);
 			return (*savepath);
 		}
-		tmpp = *savepath;
-		*savepath = ft_strjoin(tmpp, "-");
-		ft_strdel(&tmpp);
-		tmpp = *savepath;
-		*savepath = ft_strjoin(tmpp, tmp);
-		ft_strdel(&tmp);
-		ft_strdel(&tmpp);
-		i++;
+		ft_next(tmpp, &savepath, tmp, &i);
 	}
 	return (*savepath);
 }
 
-char	**ft_opti_allpaths(t_ants *info, char **path, char **savepath)
+char			**ft_opti_allpaths(t_ants *info, char **path, char **savepath)
 {
 	int		i;
 	int		j;

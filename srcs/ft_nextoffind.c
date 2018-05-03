@@ -6,34 +6,26 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/05/03 10:54:53 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/05/03 14:13:08 by rkrief           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-void	ft_choose_nbofrm(int *clonem, t_ants *info)
+void	ft_nextoffind(t_ants *info, char **path)
 {
-	info->m++;
-	while (info->m >= ft_nbrooms_in_path(info->path))
-		info->m--;
-	*clonem = info->m;
-	while (info->m > 1)
-	{
-		if (info->rm)
-			ft_strdel(&info->rm);
-		if (ft_nbrooms_in_path(info->path) != 1)
-			info->rm = ft_rm_last_one(info->path);
-		else
-			break ;
-		info->m--;
-	}
-	info->m = *clonem;
-	ft_strdel(&info->room);
-	info->room = ft_get_last_inpath(info->path);
-	if (ft_strequ(info->room, "") || ft_strequ(info->path, ""))
-	{
-		info->room = info->start;
-		info->path = info->start;
-	}
+	int	i;
+
+	i = 0;
+	ft_strdel(&info->tmp);
+	info->tmp1 = path;
+	ft_ultim_path(info, path);
+	info->tmpp = info->ultim_path;
+	info->ultim_path = ft_sort_paths(info->tmpp);
+	info->room_ant = (char**)ft_memalloc(sizeof(char*) * (info->nb_ant + 1));
+	info->path_ant = (char**)ft_memalloc(sizeof(char*) * (info->nb_ant + 1));
+	ft_algo(info, info->ultim_path);
+	while (info->tmpp[i])
+		ft_strdel(&info->tmpp[i++]);
+	ft_memdel((void**)info->tmpp);
 }
