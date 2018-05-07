@@ -6,12 +6,12 @@
 /*   By: rkrief <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 16:44:09 by rkrief            #+#    #+#             */
-/*   Updated: 2018/05/03 14:15:50 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/05/06 10:57:28 by Raphael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
-
+/*
 static void		ft_save_path_ifrepeat(t_ants *info, char **clonepath)
 {
 	info->nb_repeat++;
@@ -85,7 +85,7 @@ static char		**ft_findlink(t_ants *info, char **allpath)
 	ft_feel_free(info, clonepath);
 	return (allpath);
 }
-
+*/
 void			ft_fill_path(t_ants *info)
 {
 	int		i;
@@ -96,7 +96,9 @@ void			ft_fill_path(t_ants *info)
 	ft_find_nb_tubes(info);
 	allpath = (char**)ft_memalloc(sizeof(char*) * (info->nb_tubes * 10));
 	ft_find_nbroom(info);
-	path = ft_findlink(info, allpath);
+//	path = ft_findlink(info, allpath);
+	
+	path = ft_find_allpath(info, allpath);
 	info->tmpp = path;
 	path = ft_sort_paths(info->tmpp);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: alecott <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 10:13:35 by alecott           #+#    #+#             */
-/*   Updated: 2018/05/03 14:43:30 by rkrief           ###   ########.fr       */
+/*   Updated: 2018/05/06 10:55:49 by Raphael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,5 @@ void			ft_ultim_path(t_ants *info, char **path);
 void			ft_nextoffind(t_ants *info, char **path);
 void			ft_free_tab(char **tab);
 int				ft_nb_element(char **tab);
+char    **ft_find_allpath(t_ants *info, char **allpath);
 #endif
